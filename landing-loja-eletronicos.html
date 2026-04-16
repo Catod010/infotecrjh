@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechStore — Celulares & Assistência</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #0F6E56;
+    --green-dark: #085041;
+    --green-mid: #1D9E75;
+    --green-light: #E1F5EE;
+    --green-pale: #F0FAF6;
+    --text: #111;
+    --text-muted: #666;
+    --text-faint: #999;
+    --border: rgba(0,0,0,0.08);
+    --border-strong: rgba(0,0,0,0.14);
+    --bg: #fff;
+    --bg-soft: #F7F8F7;
+    --bg-card: #fff;
+    --radius: 12px;
+    --radius-lg: 18px;
+    --radius-xl: 24px;
+    --whatsapp: #25D366;
+    --red: #E24B4A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg-soft);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── WRAPPER ── */
+  .wrapper {
+    max-width: 430px;
+    margin: 0 auto;
+    background: var(--bg);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--green);
+    padding: 0 0 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .hero-inner {
+    padding: 36px 20px 0;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .store-avatar {
+    width: 76px; height: 76px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    border: 2px solid rgba(255,255,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 14px;
+    font-size: 32px;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin-bottom: 5px;
+  }
+
+  .hero-tagline {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    font-weight: 300;
+    margin-bottom: 18px;
+  }
+
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 22px;
+  }
+
+  .hero-badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 12px;
+    color: #fff;
+    font-weight: 400;
+  }
+
+  .hero-curve {
+    height: 30px;
+    background: var(--bg);
+    border-radius: 30px 30px 0 0;
+    margin-top: -1px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 22px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    margin-bottom: 14px;
+  }
+
+  /* ── INFO GRID ── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .info-card {
+    background: var(--bg-soft);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+  }
+
+  .info-card .lbl { font-size: 11px; color: var(--text-faint); margin-bottom: 3px; }
+  .info-card .val { font-size: 13px; font-weight: 500; color: var(--text); word-break: break-all; }
+
+  .map-box {
+    background: var(--green-pale);
+    border-radius: var(--radius);
+    border: 1px solid rgba(15,110,86,0.15);
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .map-pin {
+    width: 36px; height: 36px;
+    background: var(--green-light);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+
+  .map-text { font-size: 13px; color: var(--green-dark); line-height: 1.5; }
+  .map-text strong { display: block; font-weight: 500; }
+
+  /* ── PAYMENT ── */
+  .pay-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .pay-item {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 8px;
+    text-align: center;
+  }
+
+  .pay-item .pay-icon { font-size: 20px; margin-bottom: 5px; }
+  .pay-item .pay-label { font-size: 11px; color: var(--text-muted); }
+
+  /* ── TRADE BOX ── */
+  .trade-card {
+    background: var(--green-pale);
+    border: 1px solid rgba(15,110,86,0.18);
+    border-radius: var(--radius-lg);
+    padding: 16px 18px;
+  }
+
+  .trade-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--green-dark);
+    margin-bottom: 7px;
+    display: flex; align-items: center; gap: 7px;
+  }
+
+  .trade-card p { font-size: 13px; color: #2a6b56; line-height: 1.65; }
+
+  /* ── CATALOG ── */
+  .catalog-section {
+    padding: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .catalog-header {
+    padding: 22px 20px 0;
+  }
+
+  .cat-tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 0 20px 16px;
+    scrollbar-width: none;
+  }
+
+  .cat-tabs::-webkit-scrollbar { display: none; }
+
+  .cat-tab {
+    padding: 8px 16px;
+    border-radius: 24px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1.5px solid var(--border-strong);
+    cursor: pointer;
+    white-space: nowrap;
+    background: var(--bg);
+    color: var(--text-muted);
+    transition: all 0.18s;
+    flex-shrink: 0;
+    user-select: none;
+  }
+
+  .cat-tab.active {
+    background: var(--green);
+    color: #fff;
+    border-color: var(--green);
+  }
+
+  .brand-filter {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 0 20px 14px;
+    scrollbar-width: none;
+  }
+
+  .brand-filter::-webkit-scrollbar { display: none; }
+
+  .brand-btn {
+    padding: 5px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid var(--border-strong);
+    cursor: pointer;
+    white-space: nowrap;
+    background: var(--bg-soft);
+    color: var(--text-muted);
+    transition: all 0.15s;
+    flex-shrink: 0;
+    user-select: none;
+  }
+
+  .brand-btn.active {
+    background: var(--green-dark);
+    color: #fff;
+    border-color: var(--green-dark);
+  }
+
+  /* ── PRODUCT LIST ── */
+  #prod-area {
+    padding: 0 20px 20px;
+  }
+
+  .brand-block { margin-bottom: 4px; }
+
+  .brand-hdr {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 0 10px;
+    cursor: pointer;
+    user-select: none;
+    border-top: 1px solid var(--border);
+  }
+
+  .brand-hdr:first-of-type { border-top: none; }
+
+  .brand-emoji {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .brand-hdr-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    flex: 1;
+  }
+
+  .brand-hdr-count {
+    font-size: 11px;
+    color: var(--text-faint);
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2px 9px;
+  }
+
+  .brand-chevron {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--bg-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    color: var(--text-faint);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .brand-chevron.open { transform: rotate(180deg); }
+
+  .brand-items { }
+  .brand-items.collapsed { display: none; }
+
+  .prod-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .prod-row:last-child { border-bottom: none; }
+
+  .prod-ico {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+  }
+
+  .prod-details { flex: 1; min-width: 0; }
+  .prod-nm { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .prod-sub { font-size: 11px; color: var(--text-faint); margin-top: 1px; }
+
+  .prod-right { text-align: right; flex-shrink: 0; }
+  .prod-prc { font-size: 13px; font-weight: 600; color: var(--green); }
+  .prod-avail {
+    display: flex; align-items: center; justify-content: flex-end;
+    gap: 4px; font-size: 11px; color: var(--text-faint); margin-top: 3px;
+  }
+
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%; flex-shrink: 0;
+  }
+  .dot-g { background: var(--green-mid); }
+  .dot-r { background: var(--red); }
+
+  .empty-state {
+    padding: 32px 0;
+    text-align: center;
+    color: var(--text-faint);
+    font-size: 14px;
+  }
+
+  /* ── REPAIRS ── */
+  .repair-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .repair-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 11px 12px;
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  .repair-ic {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: var(--green-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ── CTA ── */
+  .cta-wrap { padding: 20px; }
+
+  .cta-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    background: var(--whatsapp);
+    color: #fff;
+    padding: 16px;
+    border-radius: var(--radius-lg);
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.15s, transform 0.12s;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+  }
+
+  .cta-btn:active { transform: scale(0.98); opacity: 0.92; }
+
+  .cta-sub {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-faint);
+    margin-top: 10px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 18px 20px 30px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer p { font-size: 12px; color: var(--text-faint); line-height: 1.7; }
+  .footer strong { color: var(--green); font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="store-avatar">📱</div>
+      <h1 id="store-name">TechStore</h1>
+      <p class="hero-tagline" id="store-tagline">Celulares, acessórios e assistência técnica</p>
+      <div class="hero-badges">
+        <span class="hero-badge">📍 <span id="hero-city">Sua Cidade, UF</span></span>
+        <span class="hero-badge">⏰ <span id="hero-hours">Seg–Sáb 9h–18h</span></span>
+        <span class="hero-badge">✅ Loja verificada</span>
+      </div>
+    </div>
+    <div class="hero-curve"></div>
+  </div>
+
+  <!-- ── SOBRE A LOJA ── -->
+  <div class="section">
+    <div class="section-label">Sobre a loja</div>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="lbl">WhatsApp</div>
+        <div class="val" id="store-phone">(11) 99999-0000</div>
+      </div>
+      <div class="info-card">
+        <div class="lbl">Instagram</div>
+        <div class="val" id="store-ig">@loja_tech</div>
+      </div>
+      <div class="info-card">
+        <div class="lbl">Endereço</div>
+        <div class="val" id="store-addr-short">Rua Exemplo, 123</div>
+      </div>
+      <div class="info-card">
+        <div class="lbl">Horário</div>
+        <div class="val" id="store-hours">Seg–Sáb 9h–18h</div>
+      </div>
+    </div>
+    <div class="map-box">
+      <div class="map-pin">📍</div>
+      <div class="map-text">
+        <strong id="store-addr-full">Rua Exemplo, 123 — Bairro</strong>
+        <span id="store-city-state">Cidade / UF</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FORMAS DE PAGAMENTO ── -->
+  <div class="section">
+    <div class="section-label">Formas de pagamento</div>
+    <div class="pay-grid">
+      <div class="pay-item"><div class="pay-icon">💳</div><div class="pay-label">Crédito</div></div>
+      <div class="pay-item"><div class="pay-icon">💳</div><div class="pay-label">Débito</div></div>
+      <div class="pay-item"><div class="pay-icon">📱</div><div class="pay-label">Pix</div></div>
+      <div class="pay-item"><div class="pay-icon">💵</div><div class="pay-label">Dinheiro</div></div>
+      <div class="pay-item"><div class="pay-icon">📦</div><div class="pay-label">Parcelado</div></div>
+      <div class="pay-item"><div class="pay-icon">🔁</div><div class="pay-label">Financiamento</div></div>
+    </div>
+  </div>
+
+  <!-- ── TROCA ── -->
+  <div class="section">
+    <div class="section-label">Troca & parte do pagamento</div>
+    <div class="trade-card">
+      <h3>🔄 Aceita celular na troca?</h3>
+      <p>Sim! Aceitamos seu celular usado como troca ou como parte do pagamento. Traga o aparelho na loja ou envie fotos pelo WhatsApp para avaliação sem compromisso.</p>
+    </div>
+  </div>
+
+  <!-- ── CATÁLOGO ── -->
+  <div class="catalog-section">
+    <div class="catalog-header">
+      <div class="section-label">Aparelhos disponíveis</div>
+    </div>
+    <div class="cat-tabs" id="cat-tabs">
+      <div class="cat-tab active" onclick="switchCat(this,'lacrado')">📦 Lacrados</div>
+      <div class="cat-tab" onclick="switchCat(this,'vitrine')">🏪 Vitrine</div>
+      <div class="cat-tab" onclick="switchCat(this,'usado')">♻️ Usados</div>
+    </div>
+    <div class="brand-filter" id="brand-filter">
+      <div class="brand-btn active" onclick="filterBrand(this,'all')">Todas</div>
+      <div class="brand-btn" onclick="filterBrand(this,'apple')">🍎 iPhone</div>
+      <div class="brand-btn" onclick="filterBrand(this,'samsung')">Samsung</div>
+      <div class="brand-btn" onclick="filterBrand(this,'motorola')">Motorola</div>
+      <div class="brand-btn" onclick="filterBrand(this,'xiaomi')">Xiaomi</div>
+    </div>
+    <div id="prod-area"></div>
+  </div>
+
+  <!-- ── ASSISTÊNCIA ── -->
+  <div class="section">
+    <div class="section-label">Assistência técnica</div>
+    <div class="repair-grid">
+      <div class="repair-item"><div class="repair-ic">🔧</div>Troca de tela</div>
+      <div class="repair-item"><div class="repair-ic">🔋</div>Troca de bateria</div>
+      <div class="repair-item"><div class="repair-ic">📸</div>Reparo de câmera</div>
+      <div class="repair-item"><div class="repair-ic">🔌</div>Conector de carga</div>
+      <div class="repair-item"><div class="repair-ic">💧</div>Danos por água</div>
+      <div class="repair-item"><div class="repair-ic">🔈</div>Alto-falante / mic</div>
+      <div class="repair-item"><div class="repair-ic">📶</div>Sinal / antena</div>
+      <div class="repair-item"><div class="repair-ic">💾</div>Formatação</div>
+      <div class="repair-item"><div class="repair-ic">🖥️</div>Backlight / display</div>
+      <div class="repair-item"><div class="repair-ic">🔑</div>Face ID / Touch ID</div>
+    </div>
+  </div>
+
+  <!-- ── CTA ── -->
+  <div class="cta-wrap">
+    <a class="cta-btn" id="cta-wpp" href="https://wa.me/5511999990000?text=Olá! Vi o catálogo e tenho interesse!" target="_blank">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Falar pelo WhatsApp
+    </a>
+    <p class="cta-sub">Respondemos rápido · Atendimento personalizado</p>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <div class="footer">
+    <p>
+      <strong id="footer-name">TechStore</strong><br>
+      Garantia em todos os serviços de assistência técnica.<br>
+      Produtos com nota fiscal e procedência garantida.
+    </p>
+  </div>
+
+</div>
+
+<script>
+/* ─────────────────────────────────────────────
+   CONFIGURAÇÕES DA LOJA — edite aqui
+───────────────────────────────────────────── */
+const LOJA = {
+  nome:          'TechStore',
+  tagline:       'Celulares, acessórios e assistência técnica',
+  telefone:      '5511999990000',   // apenas números com DDI
+  telefoneExib:  '(11) 99999-0000',
+  instagram:     '@loja_tech',
+  endShort:      'Rua Exemplo, 123',
+  endFull:       'Rua Exemplo, 123 — Bairro',
+  cidade:        'Sua Cidade / UF',
+  horario:       'Seg–Sáb 9h–18h',
+};
+
+/* ─────────────────────────────────────────────
+   CATÁLOGO DE PRODUTOS
+   Campos: brand | name | mem | price | avail
+   avail: true = disponível / false = indisponível
+───────────────────────────────────────────── */
+const CATALOG = {
+
+  lacrado: [
+    /* — iPhone — */
+    { brand:'apple', name:'iPhone 11',        mem:'64GB · Preto',                price:'R$ 2.199', avail:true  },
+    { brand:'apple', name:'iPhone 11',        mem:'128GB · Branco',              price:'R$ 2.399', avail:true  },
+    { brand:'apple', name:'iPhone 11 Pro',    mem:'64GB · Cinza Espacial',       price:'R$ 2.799', avail:false },
+    { brand:'apple', name:'iPhone 11 Pro Max',mem:'256GB · Dourado',             price:'R$ 3.199', avail:true  },
+    { brand:'apple', name:'iPhone 12',        mem:'64GB · Preto',                price:'R$ 2.799', avail:true  },
+    { brand:'apple', name:'iPhone 12',        mem:'128GB · Azul',                price:'R$ 2.999', avail:true  },
+    { brand:'apple', name:'iPhone 12 Pro',    mem:'128GB · Grafite',             price:'R$ 3.599', avail:false },
+    { brand:'apple', name:'iPhone 12 Pro Max',mem:'256GB · Azul Pacífico',       price:'R$ 3.999', avail:true  },
+    { brand:'apple', name:'iPhone 13',        mem:'128GB · Meia-Noite',          price:'R$ 3.799', avail:true  },
+    { brand:'apple', name:'iPhone 13 Pro',    mem:'256GB · Sierra Azul',         price:'R$ 4.499', avail:true  },
+    { brand:'apple', name:'iPhone 13 Pro Max',mem:'256GB · Grafite',             price:'R$ 4.999', avail:false },
+    { brand:'apple', name:'iPhone 14',        mem:'128GB · Roxo',                price:'R$ 4.299', avail:true  },
+    { brand:'apple', name:'iPhone 14 Plus',   mem:'128GB · Azul',                price:'R$ 4.799', avail:true  },
+    { brand:'apple', name:'iPhone 14 Pro',    mem:'256GB · Dourado',             price:'R$ 5.499', avail:true  },
+    { brand:'apple', name:'iPhone 14 Pro Max',mem:'256GB · Deep Purple',         price:'R$ 5.999', avail:false },
+    { brand:'apple', name:'iPhone 15',        mem:'128GB · Preto',               price:'R$ 5.199', avail:true  },
+    { brand:'apple', name:'iPhone 15 Plus',   mem:'128GB · Rosa',                price:'R$ 5.699', avail:true  },
+    { brand:'apple', name:'iPhone 15 Pro',    mem:'256GB · Natural Titanium',    price:'R$ 6.999', avail:true  },
+    { brand:'apple', name:'iPhone 15 Pro Max',mem:'256GB · Natural Titanium',    price:'R$ 7.999', avail:true  },
+    /* — Samsung — */
+    { brand:'samsung', name:'Galaxy A34',     mem:'128GB · Preto',               price:'R$ 1.299', avail:true  },
+    { brand:'samsung', name:'Galaxy A54',     mem:'128GB · Branco',              price:'R$ 1.699', avail:true  },
+    { brand:'samsung', name:'Galaxy S23',     mem:'128GB · Phantom Black',       price:'R$ 3.499', avail:false },
+    { brand:'samsung', name:'Galaxy S23+',    mem:'256GB · Cream',               price:'R$ 3.999', avail:true  },
+    { brand:'samsung', name:'Galaxy S23 Ultra',mem:'256GB · Green',              price:'R$ 4.999', avail:true  },
+    { brand:'samsung', name:'Galaxy S24',     mem:'128GB · Marble Gray',         price:'R$ 3.999', avail:true  },
+    { brand:'samsung', name:'Galaxy S24 Ultra',mem:'256GB · Titanium Black',     price:'R$ 6.499', avail:true  },
+    /* — Motorola — */
+    { brand:'motorola', name:'Moto G54',      mem:'128GB · Azul',                price:'R$ 899',   avail:true  },
+    { brand:'motorola', name:'Moto G84',      mem:'256GB · Marshmallow Blue',    price:'R$ 1.299', avail:true  },
+    { brand:'motorola', name:'Moto Edge 40',  mem:'256GB · Eclipse Black',       price:'R$ 1.799', avail:false },
+    { brand:'motorola', name:'Moto Edge 40 Pro',mem:'256GB · Black Beauty',      price:'R$ 2.499', avail:true  },
+    /* — Xiaomi — */
+    { brand:'xiaomi', name:'Redmi Note 12',   mem:'128GB · Midnight Black',      price:'R$ 999',   avail:true  },
+    { brand:'xiaomi', name:'Redmi Note 13 Pro',mem:'256GB · Aurora Purple',      price:'R$ 1.499', avail:true  },
+    { brand:'xiaomi', name:'Xiaomi 13T',      mem:'256GB · Alpine Blue',         price:'R$ 2.799', avail:false },
+  ],
+
+  vitrine: [
+    { brand:'apple',   name:'iPhone 13',        mem:'128GB · Estelar',            price:'R$ 3.299', avail:true  },
+    { brand:'apple',   name:'iPhone 14 Pro',    mem:'256GB · Dourado',            price:'R$ 4.999', avail:true  },
+    { brand:'apple',   name:'iPhone 15 Pro',    mem:'128GB · White Titanium',     price:'R$ 6.299', avail:false },
+    { brand:'samsung', name:'Galaxy S23 Ultra', mem:'512GB · Phantom Black',      price:'R$ 4.499', avail:true  },
+    { brand:'samsung', name:'Galaxy S24+',      mem:'256GB · Cobalt Violet',      price:'R$ 4.199', avail:true  },
+    { brand:'motorola',name:'Moto Edge 40 Neo', mem:'256GB · Soothing Sea',       price:'R$ 1.599', avail:true  },
+    { brand:'xiaomi',  name:'Xiaomi 13T Pro',   mem:'512GB · Black',              price:'R$ 3.199', avail:false },
+  ],
+
+  usado: [
+    { brand:'apple',   name:'iPhone 11',        mem:'64GB · Preto · Bom estado',  price:'R$ 1.499', avail:true  },
+    { brand:'apple',   name:'iPhone 11 Pro Max',mem:'256GB · Verde · Muito bom',  price:'R$ 2.399', avail:true  },
+    { brand:'apple',   name:'iPhone 12',        mem:'64GB · Azul · Bom',          price:'R$ 1.999', avail:false },
+    { brand:'apple',   name:'iPhone 13',        mem:'128GB · Estelar · Muito bom',price:'R$ 2.799', avail:true  },
+    { brand:'samsung', name:'Galaxy A53',       mem:'128GB · Preto · Bom',        price:'R$ 799',   avail:true  },
+    { brand:'samsung', name:'Galaxy S22',       mem:'128GB · Phantom White · Bom',price:'R$ 2.199', avail:true  },
+    { brand:'motorola',name:'Moto G52',         mem:'128GB · Azul · Bom',         price:'R$ 649',   avail:true  },
+    { brand:'xiaomi',  name:'Redmi Note 11',    mem:'128GB · Graphite Gray · Bom',price:'R$ 699',   avail:false },
+  ],
+};
+
+/* ─────────────────────────────────────────────
+   Metadados de marca
+───────────────────────────────────────────── */
+const BRANDS = {
+  apple:    { label:'iPhone',   emoji:'🍎' },
+  samsung:  { label:'Samsung',  emoji:'🔵' },
+  motorola: { label:'Motorola', emoji:'〽️' },
+  xiaomi:   { label:'Xiaomi',   emoji:'🟠' },
+};
+const BRAND_ORDER = ['apple','samsung','motorola','xiaomi'];
+
+let currentCat   = 'lacrado';
+let currentBrand = 'all';
+let collapsed    = {};
+
+/* ── Aplica dados da loja na página ── */
+function applyLoja() {
+  document.title = LOJA.nome + ' — Celulares & Assistência';
+  document.getElementById('store-name').textContent    = LOJA.nome;
+  document.getElementById('store-tagline').textContent = LOJA.tagline;
+  document.getElementById('hero-city').textContent     = LOJA.cidade;
+  document.getElementById('hero-hours').textContent    = LOJA.horario;
+  document.getElementById('store-phone').textContent   = LOJA.telefoneExib;
+  document.getElementById('store-ig').textContent      = LOJA.instagram;
+  document.getElementById('store-addr-short').textContent = LOJA.endShort;
+  document.getElementById('store-hours').textContent   = LOJA.horario;
+  document.getElementById('store-addr-full').textContent  = LOJA.endFull;
+  document.getElementById('store-city-state').textContent = LOJA.cidade;
+  document.getElementById('footer-name').textContent   = LOJA.nome;
+  const wppLink = 'https://wa.me/' + LOJA.telefone + '?text=Olá! Vi o catálogo e tenho interesse!';
+  document.getElementById('cta-wpp').href = wppLink;
+}
+
+/* ── Switch categoria (lacrado / vitrine / usado) ── */
+function switchCat(el, cat) {
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  currentCat = cat;
+  currentBrand = 'all';
+  collapsed = {};
+  document.querySelectorAll('.brand-btn').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.brand-btn')[0].classList.add('active');
+  render();
+}
+
+/* ── Filtrar por marca ── */
+function filterBrand(el, brand) {
+  document.querySelectorAll('.brand-btn').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  currentBrand = brand;
+  collapsed = {};
+  render();
+}
+
+/* ── Toggle collapse de marca ── */
+function toggleBrand(brand) {
+  collapsed[brand] = !collapsed[brand];
+  const items = document.getElementById('items-' + brand);
+  const chev  = document.getElementById('chev-'  + brand);
+  if (items) items.classList.toggle('collapsed', collapsed[brand]);
+  if (chev)  chev.classList.toggle('open', !collapsed[brand]);
+}
+
+/* ── Renderiza lista de produtos ── */
+function render() {
+  const items   = CATALOG[currentCat];
+  const filtered = currentBrand === 'all' ? items : items.filter(i => i.brand === currentBrand);
+
+  const byBrand = {};
+  filtered.forEach(item => {
+    if (!byBrand[item.brand]) byBrand[item.brand] = [];
+    byBrand[item.brand].push(item);
+  });
+
+  let html = '';
+
+  BRAND_ORDER.forEach(brand => {
+    const list = byBrand[brand];
+    if (!list || list.length === 0) return;
+
+    const meta = BRANDS[brand];
+    const isCol = !!collapsed[brand];
+    const count = list.length;
+
+    html += `<div class="brand-block">
+      <div class="brand-hdr" onclick="toggleBrand('${brand}')">
+        <div class="brand-emoji">${meta.emoji}</div>
+        <span class="brand-hdr-name">${meta.label}</span>
+        <span class="brand-hdr-count">${count} modelo${count > 1 ? 's' : ''}</span>
+        <div class="brand-chevron ${isCol ? '' : 'open'}" id="chev-${brand}">▼</div>
+      </div>
+      <div class="brand-items ${isCol ? 'collapsed' : ''}" id="items-${brand}">`;
+
+    list.forEach(item => {
+      html += `<div class="prod-row">
+        <div class="prod-ico">📱</div>
+        <div class="prod-details">
+          <div class="prod-nm">${item.name}</div>
+          <div class="prod-sub">${item.mem}</div>
+        </div>
+        <div class="prod-right">
+          <div class="prod-prc">${item.price}</div>
+          <div class="prod-avail">
+            <span class="dot ${item.avail ? 'dot-g' : 'dot-r'}"></span>
+            ${item.avail ? 'Disponível' : 'Indisponível'}
+          </div>
+        </div>
+      </div>`;
+    });
+
+    html += `</div></div>`;
+  });
+
+  if (!html) {
+    html = '<div class="empty-state">Nenhum aparelho nesta categoria no momento.</div>';
+  }
+
+  document.getElementById('prod-area').innerHTML = html;
+}
+
+applyLoja();
+render();
+</script>
+</body>
+</html>
